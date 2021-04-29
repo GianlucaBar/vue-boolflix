@@ -29,6 +29,10 @@
                 <div class="movie-card" v-for="card in movieCards">
                     <div><h3> Title: {{ card.title }} </h3></div>
 
+                    <div class="card-cover">
+                        <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt="">
+                        <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt=""></div>
+
                     <div>Original Title: {{ card.original_title }}</div>
 
                     <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
@@ -38,6 +42,11 @@
 
                 <div class="movie-card" v-for="card in tvShowCards">
                     <div><h3> Title: {{ card.name }} </h3></div>
+
+                    <div class="card-cover">
+                        <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt=""> 
+                        <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                    </div>
 
                     <div>Original Title: {{ card.original_name }}</div>
 
