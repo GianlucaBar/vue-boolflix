@@ -25,6 +25,10 @@ var app = new Vue(
                     console.log(result.results)
                 });
             }
+
+            // getLangFlag(){
+            //     return 'img/flags/' + card.original_language + '.svg';
+            // }
 		},
 
         // mounted() {

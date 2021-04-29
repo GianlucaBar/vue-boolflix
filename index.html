@@ -27,13 +27,13 @@
         <main>
             <div class="card-container">
                 <div class="movie-card" v-for="card in movieCards">
-                    <span>Title: {{ card.title }}</span>
+                    <div><h3> Title: {{ card.title }} </h3></div>
 
-                    <span>Original Title: {{ card.original_title }}</span>
+                    <div>Original Title: {{ card.original_title }}</div>
 
-                    <span>Language: {{ card.original_language }}</span>
+                    <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
 
-                    <span>Score: {{ card.vote_average }}</span>
+                    <div>Score: {{ card.vote_average }}</div>
                 </div>
 
                 

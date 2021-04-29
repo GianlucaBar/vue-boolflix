@@ -18,6 +18,7 @@ img{
 header{
     background-color: rgb(31, 26, 26);
     text-align: center;
+    padding: 30px;
 }
 
 .input-Bar{
@@ -47,6 +48,13 @@ header{
     color: white;
 }
 
-.movie-card span{
-    display: block;
+.movie-card div{
+    padding: 5px 10px;
+}
+
+
+
+.flag img{
+    width: 30px;
+    vertical-align: middle;
 }
