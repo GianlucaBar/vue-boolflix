@@ -24,6 +24,7 @@ header{
 .input-Bar{
     margin: auto;
 }
+
 #search-bar{
     padding: 10px 5px;
     width: 200px;
@@ -33,6 +34,7 @@ header{
  main{
      background-color: rgb(56, 56, 56);
      height: 100vh;
+     overflow-y: auto;
  }
 
 .card-container{

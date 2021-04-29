@@ -36,6 +36,16 @@
                     <div>Score: {{ card.vote_average }}</div>
                 </div>
 
+                <div class="movie-card" v-for="card in tvShowCards">
+                    <div><h3> Title: {{ card.name }} </h3></div>
+
+                    <div>Original Title: {{ card.original_name }}</div>
+
+                    <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+
+                    <div>Score: {{ card.vote_average }}</div>
+                </div>
+
                 
             </div>
         </main>

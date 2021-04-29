@@ -5,7 +5,8 @@ var app = new Vue(
         data: {
             albums: [],
             inputSearch: '',
-            movieCards: []
+            movieCards: [],
+            tvShowCards: []
         },
 
         methods: {
@@ -22,13 +23,24 @@ var app = new Vue(
                     
 
                     this.movieCards = result.results;
+                });
+
+                axios
+                .get('https://api.themoviedb.org/3/search/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
+                    params: {
+                        query: this.inputSearch,
+                        page: 1
+                    }
+                })
+                .then( (response) => {
+                    const result = response.data;
+                    
+
+                    this.tvShowCards = result.results;
                     console.log(result.results)
                 });
             }
 
-            // getLangFlag(){
-            //     return 'img/flags/' + card.original_language + '.svg';
-            // }
 		},
 
         // mounted() {
