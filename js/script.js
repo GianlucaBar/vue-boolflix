@@ -39,6 +39,11 @@ var app = new Vue(
                     this.tvShowCards = result.results;
                     console.log(result.results)
                 });
+            },
+
+            getVoteOnFive(vote){
+                const voteOnFive = Math.floor(vote / 2)
+                return voteOnFive;
             }
 
 		},

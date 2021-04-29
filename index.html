@@ -21,7 +21,7 @@
         <header>
             <div class="inputBar">
                 <input v-model="inputSearch" type="text" id="search-bar" placeholder="Cerca film" @keyup.enter="getSearchResult">
-            </div>    
+            </div>   
         </header>
 
         <main>
@@ -37,7 +37,12 @@
 
                     <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
 
-                    <div>Score: {{ card.vote_average }}</div>
+                    <div>Score: 
+                        <span v-if="card.vote_average == 0">No score</span>
+                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
                 </div>
 
                 <div class="movie-card" v-for="card in tvShowCards">
@@ -52,7 +57,12 @@
 
                     <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
 
-                    <div>Score: {{ card.vote_average }}</div>
+                    <div>Score: 
+                        <span v-if="card.vote_average == 0">No score</span>
+                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                            <i class="fas fa-star"></i>
+                        </span>
+                    </div>
                 </div>
 
                 

@@ -31,21 +31,21 @@ header{
 }
 
 /* main  */
- main{
-     background-color: rgb(56, 56, 56);
-     height: 100vh;
-     overflow-y: auto;
- }
+main{
+    background-color: rgb(56, 56, 56);
+    height: 100vh;
+    overflow-y: auto;
+}
 
 .card-container{
     display: flex;
     flex-wrap: wrap;
-
+    justify-content: center;
 }
 
-.posterNull{
+/* .posterNull{
     width: 342px;
-}
+} */
 
 .movie-card{
     flex-basis: calc( 100% / 6 - 20px );
@@ -58,10 +58,14 @@ header{
     padding: 5px 10px;
 }
 
-
-
 .flag img{
     width: 30px;
     vertical-align: middle;
+}
+
+.stars i{
+    font-size: 20px;
+    color: rgb(233, 233, 27);
+    padding-right: 5px;
 }
 
