@@ -12,11 +12,12 @@ body{
 
 img{
     width: 100%;
+    display: block;
 }
 
 /* header  */
 header{
-    background-color: rgb(31, 26, 26);
+    background-color: #0F0F0F;
     text-align: center;
     padding: 30px;
 }
@@ -32,7 +33,7 @@ header{
 
 /* main  */
 main{
-    background-color: rgb(56, 56, 56);
+    background-color: #111111;
     height: 100vh;
     overflow-y: auto;
 }
@@ -47,25 +48,57 @@ main{
     width: 342px;
 } */
 
+/* cards  */
 .movie-card{
     flex-basis: calc( 100% / 6 - 20px );
     margin: 20px;
     background-color: grey;
     color: white;
+    position: relative;
 }
 
-.movie-card div{
+/* .movie-card div{
     padding: 5px 10px;
-}
+} */
 
 .flag img{
     width: 30px;
     vertical-align: middle;
+    display: inline-block;
 }
 
 .stars i{
     font-size: 20px;
-    color: rgb(233, 233, 27);
+    color: #D80000;
     padding-right: 5px;
 }
 
+.card-overlay{
+    background-color: rgba(0, 0, 0, 0.6);
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.movie-card:hover .card-overlay {
+    display: block;
+} 
+
+
+.card-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    text-align: center;
+}
+
+.card-info div{
+    padding: 20px;
+}

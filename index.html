@@ -31,7 +31,6 @@
 
                 <!-- card per il risultato della ricerca sui movies  -->
                 <div class="movie-card" v-for="card in movieCards">
-                    <div><h3> Title: {{ card.title }} </h3></div>
 
                     <div class="card-cover">
                         <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -39,24 +38,31 @@
                         <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
                     </div>
 
-                    <div>Original Title: {{ card.original_title }}</div>
+                    <div class="card-overlay">
 
-                    <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+                        <div class="card-info">
+                            <div><h3> Title: {{ card.title }} </h3></div>
 
-                    <div>Score:
-                        <!-- se il voto e' zero stampo no score   -->
-                        <span v-if="card.vote_average == 0">No score</span>
+                            <div>Original Title: {{ card.original_title }}</div>
+    
+                            <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+    
+                            <div>Score:
+                                <!-- se il voto e' zero stampo no score   -->
+                                <span v-if="card.vote_average == 0">No score</span>
+    
+                                <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                        </div>
 
-                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
-                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
-                            <i class="fas fa-star"></i>
-                        </span>
                     </div>
                 </div>
 
                 <!-- card per il risultato della ricerca sui tv-shows  -->
                 <div class="movie-card" v-for="card in tvShowCards">
-                    <div><h3> Title: {{ card.name }} </h3></div>
 
                     <div class="card-cover">
                         <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -64,19 +70,27 @@
                         <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
                     </div>
 
-                    <div>Original Title: {{ card.original_name }}</div>
+                    <div class="card-overlay">
 
-                    <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+                        <div class="card-info">
+                            <div><h3> Title: {{ card.name }} </h3></div>
 
-                    <div>Score:
-                        <!-- se il voto e' zero stampo no score   -->
-                        <span v-if="card.vote_average == 0">No score</span>
-
-                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
-                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
-                            <i class="fas fa-star"></i>
-                        </span>
+                            <div>Original Title: {{ card.original_name }}</div>
+        
+                            <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+        
+                            <div>Score:
+                                <!-- se il voto e' zero stampo no score   -->
+                                <span v-if="card.vote_average == 0">No score</span>
+        
+                                <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                    <i class="fas fa-star"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
                 
