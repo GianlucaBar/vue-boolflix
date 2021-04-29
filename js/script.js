@@ -3,7 +3,6 @@ var app = new Vue(
         el: '#root',
 
         data: {
-            albums: [],
             inputSearch: '',
             movieCards: [],
             tvShowCards: []
