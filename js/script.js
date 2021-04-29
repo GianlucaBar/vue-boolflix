@@ -10,6 +10,9 @@ var app = new Vue(
         },
 
         methods: {
+            // funzione che chiama l'api 
+            // dall'input utente arriva la chiave di ricerca 'query'
+            // cerca sia serietv che film e pusha nei rispettivi array
             getSearchResult(){
                 axios
                 .get('https://api.themoviedb.org/3/search/movie?api_key=7848f97dd1bd380d77cb8f9495749dba', {
@@ -21,7 +24,6 @@ var app = new Vue(
                 .then( (response) => {
                     const result = response.data;
                     
-
                     this.movieCards = result.results;
                 });
 
@@ -35,14 +37,14 @@ var app = new Vue(
                 .then( (response) => {
                     const result = response.data;
                     
-
                     this.tvShowCards = result.results;
-                    console.log(result.results)
                 });
             },
 
+            // gli viene passato il voto in decimi che viene dall'api
+            // restituisce un valore in quinti arrotondato per ecesso
             getVoteOnFive(vote){
-                const voteOnFive = Math.floor(vote / 2)
+                const voteOnFive = Math.ceil(vote / 2)
                 return voteOnFive;
             }
 
