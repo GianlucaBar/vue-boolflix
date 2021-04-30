@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
 
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
@@ -20,8 +20,13 @@
     <div id="root">
         <!-- header con campo ricerca  -->
         <header>
+            <div class="logo">
+                <img src="img/boolflix logo.png" alt="">
+            </div>
             <div class="inputBar">
-                <input v-model="inputSearch" type="text" id="search-bar" placeholder="Cerca film" @keyup.enter="getSearchResult">
+                <i class="fas fa-search"></i>
+                <input v-model="inputSearch" type="text" id="search-bar"
+                @keyup.enter="getSearchResult">
             </div>   
         </header>
 
@@ -41,7 +46,7 @@
                     <div class="card-overlay">
 
                         <div class="card-info">
-                            <div><h3> Title: {{ card.title }} </h3></div>
+                            <div class="card-title"><h3>{{ card.title }}</h3></div>
 
                             <div>Original Title: {{ card.original_title }}</div>
     
