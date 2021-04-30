@@ -15,14 +15,35 @@ img{
     display: block;
 }
 
+/* scrollbar  */
+::-webkit-scrollbar {
+    width: 20px;
+}
+  
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(17,17,17,1) 22%, rgba(225,6,28,1) 50%, rgba(17,17,17,1) 76%);;
+    border-radius: 10px;
+    width: 200px;
+}
+
 /* header  */
 header{
     background-color: #0F0F0F;
+    height: 100px;
+}
+
+.header-container{
     text-align: center;
-    padding: 30px;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    height: 100%;
 }
 
 .logo{
@@ -57,21 +78,35 @@ header{
 /* main  */
 main{
     background-color: #111111;
-    height: 100vh;
+    height: calc(100vh - 100px);
     overflow-y: auto;
 }
 
-.card-container{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+
+/* genre section  */
+.genre-title{
+    font-size: 35px;
+    color: #E1061C;
 }
 
+.genre-section{
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
 
 /* cards  */
+
+.card-container{
+    display: flex;
+    overflow-x: auto;
+    margin: auto;
+}
+
 .movie-card{
     flex-basis: calc( 100% / 6 - 20px );
-    margin: 20px;
+    min-width: calc( 100% / 6 - 20px );
+    margin-right: 20px;
     color: white;
     position: relative;
 }
@@ -120,12 +155,8 @@ main{
     padding: 20px;
 }
 
-.card-title{
-    text-align: center;
-}
-
 .card-title h3 {
     color: #E1061C;
-    font-size: 24px;
+    font-size: 30px;
 }
 

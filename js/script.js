@@ -3,7 +3,7 @@ var app = new Vue(
         el: '#root',
 
         data: {
-            inputSearch: 'marvel',
+            inputSearch: '',
             movieCards: [],
             tvShowCards: []
         },
@@ -49,8 +49,30 @@ var app = new Vue(
 
 		},
 
-        // mounted() {
-        //         
-        // },
+        mounted() {
+            axios
+            .get('https://api.themoviedb.org/3/discover/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
+                params: {
+        
+                }
+            })
+            .then( (response) => {
+                const result = response.data;
+                
+                this.tvShowCards = result.results;
+            });
+            
+            axios
+                .get('https://api.themoviedb.org/3/discover/movie?api_key=7848f97dd1bd380d77cb8f9495749dba', {
+                    params: {
+    
+                    }
+                })
+                .then( (response) => {
+                    const result = response.data;
+                    
+                    this.movieCards = result.results;
+                });
+        },
 
     });
