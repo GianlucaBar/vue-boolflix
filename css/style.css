@@ -101,7 +101,7 @@ main{
 
 .card-container{
     display: flex;
-    overflow-x: auto;
+    /* overflow-x: auto; */
     margin: auto;
 }
 
@@ -140,10 +140,15 @@ main{
 
 
 .movie-card:hover .card-overlay {
-    
     opacity: 1;
     transition: all 1s;
-} 
+}
+
+.movie-card:hover{
+    transform: scale(1.3);
+    z-index: 1;
+    transition: all 1s;
+}
 
 
 .card-info{
@@ -151,6 +156,8 @@ main{
     flex-direction: column;
     justify-content: center;
     height: 100%;
+    font-size: 14px;
+    overflow-y: auto;
 }
 
 .card-info div{
@@ -159,6 +166,6 @@ main{
 
 .card-title h3 {
     color: #E1061C;
-    font-size: 30px;
+    font-size: 18px;
 }
 
