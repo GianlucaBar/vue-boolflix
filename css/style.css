@@ -89,11 +89,13 @@ main{
     color: #E1061C;
 }
 
-.genre-section{
+.genre-section,
+.search-section{
     width: 90%;
     margin: auto;
     margin-top: 20px;
 }
+
 
 /* cards  */
 

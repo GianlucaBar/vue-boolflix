@@ -28,21 +28,22 @@
                 <div class="inputBar">
                     <i class="fas fa-search"></i>
                     <input v-model="inputSearch" type="text" id="search-bar"
-                    @keyup.enter="getSearchResult">
+                    @keyup.enter="getSearchResult" @keyup="getSearchResult">
                 </div>
             </div>   
         </header>
 
         <!-- main  -->
         <main>
-            <section class="discover-section">
+            <!-- sezione discover precaricata  -->
+            <section class="discover-section" v-if="inputSearch == ''">
                 <section class="genre-section">
                     <div class="genre-title"> <h2>Action</h2> </div>
 
                     <!-- card per il risultato della ricerca sui movies  -->
                     <div class="card-container">
 
-                        <div class="movie-card" v-for="card in movieCards" v-if="card.genre_ids.includes(28)">
+                        <div class="movie-card" v-for="card in discoverMovies" v-if="card.genre_ids.includes(28)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -74,7 +75,7 @@
                         </div>
 
                         <!-- card per il risultato della ricerca sui tv-shows  -->
-                        <div class="movie-card" v-for="card in tvShowCards" v-if="card.genre_ids.includes(10759)">
+                        <div class="movie-card" v-for="card in discoverTvShows" v-if="card.genre_ids.includes(10759)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -114,7 +115,7 @@
                     <!-- card per il risultato della ricerca sui movies  -->
                     <div class="card-container">
 
-                        <div class="movie-card" v-for="card in movieCards" v-if="card.genre_ids.includes(18)">
+                        <div class="movie-card" v-for="card in discoverMovies" v-if="card.genre_ids.includes(18)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -146,7 +147,7 @@
                         </div>
 
                         <!-- card per il risultato della ricerca sui tv-shows  -->
-                        <div class="movie-card" v-for="card in tvShowCards" v-if="card.genre_ids.includes(18)">
+                        <div class="movie-card" v-for="card in discoverTvShows" v-if="card.genre_ids.includes(18)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -186,7 +187,7 @@
                     <!-- card per il risultato della ricerca sui movies  -->
                     <div class="card-container">
 
-                        <div class="movie-card" v-for="card in movieCards" v-if="card.genre_ids.includes(80)">
+                        <div class="movie-card" v-for="card in discoverMovies" v-if="card.genre_ids.includes(80)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -218,7 +219,7 @@
                         </div>
 
                         <!-- card per il risultato della ricerca sui tv-shows  -->
-                        <div class="movie-card" v-for="card in tvShowCards" v-if="card.genre_ids.includes(80)">
+                        <div class="movie-card" v-for="card in discoverTvShows" v-if="card.genre_ids.includes(80)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -258,7 +259,7 @@
                     <!-- card per il risultato della ricerca sui movies  -->
                     <div class="card-container">
 
-                        <div class="movie-card" v-for="card in movieCards" v-if="card.genre_ids.includes(10751)">
+                        <div class="movie-card" v-for="card in discoverMovies" v-if="card.genre_ids.includes(10751)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -290,7 +291,7 @@
                         </div>
 
                         <!-- card per il risultato della ricerca sui tv-shows  -->
-                        <div class="movie-card" v-for="card in tvShowCards" v-if="card.genre_ids.includes(10751)">
+                        <div class="movie-card" v-for="card in discoverTvShows" v-if="card.genre_ids.includes(10751)">
 
                             <div class="card-cover">
                                 <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -325,9 +326,74 @@
                 </section>
             </section>
 
+            sezione search
+            <section class="search-section" v-else>
+                <!-- card per il risultato della ricerca sui movies  -->
+                <div class="card-container">
 
-                
+                    <div class="movie-card" v-for="card in movieCards">
 
+                        <div class="card-cover">
+                            <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                            <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt="">
+                            <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                        </div>
+    
+                        <div class="card-overlay">
+    
+                            <div class="card-info">
+                                <div class="card-title"><h3>{{ card.title }}</h3></div>
+    
+                                <div>Original Title: {{ card.original_title }}</div>
+        
+                                <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+        
+                                <div>Score:
+                                    <!-- se il voto e' zero stampo no score   -->
+                                    <span v-if="card.vote_average == 0">No score</span>
+        
+                                    <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                    <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+
+                    <!-- card per il risultato della ricerca sui tv-shows  -->
+                    <div class="movie-card" v-for="card in tvShowCards">
+
+                        <div class="card-cover">
+                            <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                            <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt=""> 
+                            <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                        </div>
+
+                        <div class="card-overlay">
+
+                            <div class="card-info">
+                                <div><h3> Title: {{ card.name }} </h3></div>
+
+                                <div>Original Title: {{ card.original_name }}</div>
+            
+                                <div><span>Language:</span> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+            
+                                <div>Score:
+                                    <!-- se il voto e' zero stampo no score   -->
+                                    <span v-if="card.vote_average == 0">No score</span>
+            
+                                    <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                    <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+            </section>
 
         </main>
     </div>

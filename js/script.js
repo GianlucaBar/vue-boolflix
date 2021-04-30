@@ -5,7 +5,9 @@ var app = new Vue(
         data: {
             inputSearch: '',
             movieCards: [],
-            tvShowCards: []
+            tvShowCards: [],
+            discoverMovies: [],
+            discoverTvShows: []
         },
 
         methods: {
@@ -49,6 +51,7 @@ var app = new Vue(
 
 		},
 
+        // preacarico la pagina con una chiamata api discover 
         mounted() {
             axios
             .get('https://api.themoviedb.org/3/discover/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
@@ -59,7 +62,7 @@ var app = new Vue(
             .then( (response) => {
                 const result = response.data;
                 
-                this.tvShowCards = result.results;
+                this.discoverTvShows = result.results;
             });
             
             axios
@@ -71,7 +74,7 @@ var app = new Vue(
                 .then( (response) => {
                     const result = response.data;
                     
-                    this.movieCards = result.results;
+                    this.discoverMovies = result.results;
                 });
         },
 
