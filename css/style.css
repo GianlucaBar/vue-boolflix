@@ -10,6 +10,7 @@ body{
     font-family: 'Montserrat', sans-serif;
     min-width: 900px;
     overflow: auto;
+    color: white;
 }
 
 img{
@@ -52,6 +53,16 @@ header{
     width: 200px;
 }
 
+.genreFilter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.genreFilter div{
+    padding: 20px;
+}
+
+
 .inputBar i{
     color: grey;
     font-size: 20px;
@@ -59,14 +70,21 @@ header{
     padding-right: 10px;
 }
 
-.inputBar input{
+#movieFilter,
+#tvFilter{
+    padding: 10px 5px;
+}
+
+.inputBar input,
+.genreFilter select{
     background-color: #0F0F0F;
     border: none;
     border-bottom: 1px solid #E1061C;
     color: white;
 }
 
-.inputBar input:focus { 
+.inputBar input:focus,
+.genreFilter select:focus { 
     outline: none;
     border-color: #E1061C;
     box-shadow: 0 0 10px #E1061C;
@@ -86,13 +104,13 @@ main{
 
 
 /* genre section  */
-.genre-title{
+.type-title{
     font-size: 35px;
     color: #E1061C;
 }
 
-.genre-section,
-.search-section{
+.movies,
+.tv-shows{
     width: 90%;
     margin: auto;
     margin-top: 20px;
@@ -103,8 +121,8 @@ main{
 
 .card-container{
     display: flex;
-    flex-wrap: wrap;
     margin: auto;
+    overflow-x: auto;
 }
 
 .movie-card{
@@ -149,12 +167,6 @@ main{
     transition: all 1s;
 }
 
-/* .movie-card:hover{
-    transform: scale(1.3);
-    z-index: 1;
-    transition: all 1s;
-} */
-
 
 .card-info{
     display: flex;
@@ -165,8 +177,22 @@ main{
     overflow-y: auto;
 }
 
-.card-info div{
+.card-title{
+    margin-top: 15px;
+}
+
+.card-info h5{
+    display: inline-block;
+}
+
+.card-info div,
+.card-info ul
+{
     padding: 20px;
+}
+
+.cast{
+    list-style-type: none;
 }
 
 .card-title h3 {

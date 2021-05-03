@@ -3,23 +3,25 @@ var app = new Vue(
         el: '#root',
 
         data: {
-            inputSearch: 'marvel',
+            inputSearch: '',
             movieCards: [],
             tvShowCards: [],
             // discoverMovies: [],
             // discoverTvShows: []
-            thisCast: [],
 
-            // genreArrays: {
-            //     movie_genre: ''
-            //     tv_genre: ''
-            // }
+            // contengono le value delle select per filtrare la ricerca, inizializzato a all 
+            currentGenreMovie: 'all',
+            currentGenreTv: 'all',
+
+            // array dei generi presi dall'api 
+            movieGenres: [],
+            tvGenres: [],
         },
 
         methods: {
             // funzione che chiama l'api 
             // dall'input utente arriva la chiave di ricerca 'query'
-            // cerca sia serietv che film e pusha nei rispettivi array
+            // cerca sia serietv che film e chiama la funzione getCast
             getSearchResult(){
                 axios
                 .get('https://api.themoviedb.org/3/search/movie?api_key=7848f97dd1bd380d77cb8f9495749dba', {
@@ -30,25 +32,29 @@ var app = new Vue(
                 })
                 .then( (response) => {
                     const result = response.data;
+                    // this.movieCards = result.results;
 
-                    this.movieCards = result.results;
-                    this.getCast(this.movieCards, 'movie');
-                    console.log(this.movieCards)  
+                    let movieArray = result.results;
+
+                    this.getCast(movieArray, 'movie')
+                    
 
                 });
 
-                // axios
-                // .get('https://api.themoviedb.org/3/search/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
-                //     params: {
-                //         query: this.inputSearch,
-                //         page: 1
-                //     }
-                // })
-                // .then( (response) => {
-                //     const result = response.data;
-                    
-                //     this.tvShowCards = result.results;
-                // });
+                axios
+                .get('https://api.themoviedb.org/3/search/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
+                    params: {
+                        query: this.inputSearch,
+                        page: 1
+                    }
+                })
+                .then( (response) => {
+                    const result = response.data;
+
+                    let tvArray = result.results;
+
+                    this.getCast(tvArray, 'tv')
+                });
             },
 
             // gli viene passato il voto in decimi che viene dall'api
@@ -58,8 +64,11 @@ var app = new Vue(
                 return voteOnFive;
             },
 
-            getCast(movieArray, type){
-                movieArray.forEach(element => {
+            // gli viene passato l'array della ricerca e il tipo di ricerca (tv/movie) 
+            //cerca e riduce a 5 elementi l'array cast e lo aggiunge alle informazioni di ciascun movie/tvshow
+            //popola gli array movieCards e tvShowCards
+            getCast(cardArray, type){
+                cardArray.forEach(element => {
                     axios
                     .get(`https://api.themoviedb.org/3/${type}/${element.id}/credits?api_key=e05661b069389f9a2788162b272f96a8`, {
                         params: {
@@ -75,21 +84,53 @@ var app = new Vue(
                             castNames.push(obj.name)
                         });
 
-                        element.cast = castNames;                 
+                        element.cast = castNames;
+                        if(type == 'movie'){
+                            this.movieCards.push(element)
+                        } else{
+                            this.tvShowCards.push(element)
+                        }               
                     });
 
                 });
 
             },
 
-		},
+            getFilteredList(cardArray, genre){
+                let filteredArray = [];
+                if(genre != 'all'){
+                    cardArray.forEach(element => {
+                        if(element.genre_ids.includes(genre)){
+                            filteredArray.push(element);
+                        }
+                    });
+                
+                } else{
+                   filteredArray = cardArray;
+                }
 
-        // preacarico la pagina con una chiamata api discover 
+                console.log(filteredArray)
+                return filteredArray
+                
+            },
+
+		},
+ 
         mounted() {
-            // getGenresArray(){
-            //     axios
-            //     .get()
-            // }
+            axios
+                .get('https://api.themoviedb.org/3/genre/movie/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
+                .then( (response) => {
+                    const result = response.data;
+                    this.movieGenres = result.genres;
+                });
+            axios
+            .get('https://api.themoviedb.org/3/genre/tv/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
+            .then( (response) => {
+                const result = response.data;
+                this.tvGenres = result.genres;
+            });            
+
+            // preacarico la pagina con una chiamata api discover
             // axios
             // .get('https://api.themoviedb.org/3/discover/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
             //     params: {
