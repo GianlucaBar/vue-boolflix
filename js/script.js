@@ -32,6 +32,8 @@ var app = new Vue(
                     }
                 })
                 .then( (response) => {
+                    
+                    this.movieCards = []
                     const result = response.data;
                     // this.movieCards = result.results;
 
@@ -50,11 +52,12 @@ var app = new Vue(
                     }
                 })
                 .then( (response) => {
+                    this.tvShowCards = []
                     const result = response.data;
 
                     let tvArray = result.results;
 
-                    this.getCast(tvArray, 'tv')
+                    this.getCast(tvArray, 'tv');
     
                 });
             },
