@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Boolflix</title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&display=swap" rel="stylesheet">
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+    
+    <div id="root">
+        <!-- header con campo ricerca  -->
+        <header>
+            <div class="header-container">
+                <div class="logo">
+                    <img src="img/boolflix logo.png" alt="">
+                </div>
+
+                <div class="genreFilter">
+                    <div>
+                        <label for="genreMovie">Movies</label>
+                        <select id="genreMovie" v-model="currentGenreMovie">
+                            <option value="all">All</option>
+                            <option v-for="genre in movieGenres" :value="genre.id">{{genre.name}}</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label for="genreTv">Tv-Shows</label>
+                        <select id="genreTv" v-model="currentGenreTv">
+                            <option value="all">All</option>
+                            <option v-for="genre in tvGenres" :value="genre.id">{{genre.name}}</option>
+                        </select>
+                    </div>
+
+                </div>
+
+
+
+                <div class="inputBar">
+                    <i class="fas fa-search"></i>
+                    <input v-model="inputSearch" type="text" id="search-bar"
+                    @keyup.enter="getSearchResult" @keyup="getSearchResult">
+                </div>
+            </div>   
+        </header>
+
+        <!-- main  -->
+        <main>
+            <!-- sezione discovery  -->
+            <section class="discovery" v-if="inputSearch == ''">
+                <section class="movies">
+                    <h2 class="type-title">Movies</h2>
+                    <!-- card per il risultato della ricerca sui movies  -->
+                    <div class="card-container">
+    
+                        <div class="movie-card" v-for="card in getFilteredList(discoverMovies, currentGenreMovie)">
+    
+                            <div class="card-cover">
+                                <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                                <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt="">
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                            </div>
+        
+                            <div class="card-overlay">
+        
+                                <div class="card-info">
+                                    <div class="card-title"><h3>{{ card.title }}</h3></div>
+        
+                                    <div> <h5>Original Title:</h5> {{ card.original_title }}</div>
+            
+                                    <div><h5>Language:</h5> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+            
+                                    <div><h5>Score:</h5>
+                                        <!-- se il voto e' zero stampo no score   -->
+                                        <span v-if="card.vote_average == 0">No score</span>
+            
+                                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                            <i class="fas fa-star"></i>
+                                        </span>
+    
+                                    </div>
+    
+                                    <ul class="cast">
+                                        <li><h5>Cast:</h5></li>
+                                        
+                                        <li v-for="castName in card.cast">
+                                            {{ castName }}
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    
+                <section class="tv-shows">
+                    <h2 class="type-title">TV-Shows</h2>
+    
+                    <!-- card per il risultato della ricerca sui tv-shows  -->
+                    <div class="card-container">
+                        <div class="movie-card" v-for="card in getFilteredList(discoverTvShows, currentGenreTv)">
+    
+                            <div class="card-cover">
+                                <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                                <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt=""> 
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                            </div>
+        
+                            <div class="card-overlay">
+        
+                                <div class="card-info">
+                                    <div class="card-title"><h3> {{ card.name }} </h3></div>
+        
+                                    <div><h5>Original Title:</h5> {{ card.original_name }}</div>
+                
+                                    <div><h5>Language:</h5> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+                
+                                    <div><h5>Score:</h5>
+                                        <!-- se il voto e' zero stampo no score   -->
+                                        <span v-if="card.vote_average == 0">No score</span>
+                
+                                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                    </div>
+        
+                                    <ul class="cast">
+                                        <li><h5>Cast:</h5></li>
+                                        <li v-for="castName in card.cast">
+                                            {{ castName }}
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+            <!-- sezione search  -->
+            <section class="search" v-else>
+                <section class="movies">
+                    <h2 class="type-title">Movies</h2>
+                    <!-- card per il risultato della ricerca sui movies  -->
+                    <div class="card-container">
+    
+                        <div class="movie-card" v-for="card in getFilteredList(movieCards, currentGenreMovie)">
+    
+                            <div class="card-cover">
+                                <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                                <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt="">
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                            </div>
+        
+                            <div class="card-overlay">
+        
+                                <div class="card-info">
+                                    <div class="card-title"><h3>{{ card.title }}</h3></div>
+        
+                                    <div> <h5>Original Title:</h5> {{ card.original_title }}</div>
+            
+                                    <div><h5>Language:</h5> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+            
+                                    <div><h5>Score:</h5>
+                                        <!-- se il voto e' zero stampo no score   -->
+                                        <span v-if="card.vote_average == 0">No score</span>
+            
+                                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                            <i class="fas fa-star"></i>
+                                        </span>
+    
+                                    </div>
+    
+                                    <ul class="cast">
+                                        <li><h5>Cast:</h5></li>
+                                        
+                                        <li v-for="castName in card.cast">
+                                            {{ castName }}
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+        
+                            </div>
+                        </div>
+                    </div>
+                </section>
+    
+                <section class="tv-shows">
+                    <h2 class="type-title">TV-Shows</h2>
+    
+                    <!-- card per il risultato della ricerca sui tv-shows  -->
+                    <div class="card-container">
+                        <div class="movie-card" v-for="card in getFilteredList(tvShowCards, currentGenreTv)">
+    
+                            <div class="card-cover">
+                                <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
+                                <img class="posterNull" v-if="card.poster_path == null " src="img/posternull.jpg" alt=""> 
+                                <img v-else :src="'https://image.tmdb.org/t/p/' + 'w342' + card.poster_path" alt="">
+                            </div>
+        
+                            <div class="card-overlay">
+        
+                                <div class="card-info">
+                                    <div class="card-title"><h3> {{ card.name }} </h3></div>
+        
+                                    <div><h5>Original Title:</h5> {{ card.original_name }}</div>
+                
+                                    <div><h5>Language:</h5> <span class="flag"> <img :src="'img/flags/' + card.original_language + '.svg'" alt=""> </span></div>
+                
+                                    <div><h5>Score:</h5>
+                                        <!-- se il voto e' zero stampo no score   -->
+                                        <span v-if="card.vote_average == 0">No score</span>
+                
+                                        <!-- se il voto e' > 0 stampa tante stelle quanto e' il voto restituito da getVoteOnFive()  -->
+                                        <span v-else v-for="n in getVoteOnFive(card.vote_average)" class="stars">
+                                            <i class="fas fa-star"></i>
+                                        </span>
+                                    </div>
+        
+                                    <ul class="cast">
+                                        <li><h5>Cast:</h5></li>
+                                        <li v-for="castName in card.cast">
+                                            {{ castName }}
+                                        </li>
+                                        
+                                    </ul>
+                                </div>
+                            </div>
+        
+                        </div>
+                    </div>
+                </section>
+            </section>
+
+
+        </main>
+    </div>
+
+
+    <script src="js/script.js"></script>
+</body>
+</html>

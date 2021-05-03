@@ -1,0 +1,200 @@
+/* RESET  */
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* COMMON  */
+body{
+    font-family: 'Montserrat', sans-serif;
+    min-width: 900px;
+    overflow: auto;
+    color: white;
+}
+
+img{
+    width: 100%;
+    display: block;
+}
+
+/* scrollbar  */
+::-webkit-scrollbar {
+    width: 20px;
+}
+  
+::-webkit-scrollbar-track {
+    border-radius: 10px;
+}
+  
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(90deg, rgba(17,17,17,1) 22%, rgba(225,6,28,1) 50%, rgba(17,17,17,1) 76%);;
+    border-radius: 10px;
+    width: 200px;
+}
+
+/* header  */
+header{
+    background-color: #0F0F0F;
+    height: 100px;
+}
+
+.header-container{
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: auto;
+    height: 100%;
+}
+
+.logo{
+    width: 200px;
+}
+
+.genreFilter{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.genreFilter div{
+    padding: 20px;
+}
+
+
+.inputBar i{
+    color: grey;
+    font-size: 20px;
+    vertical-align: middle;
+    padding-right: 10px;
+}
+
+#genreTv,
+#genreMovie{
+    padding: 10px 5px;
+}
+
+.inputBar input,
+.genreFilter select{
+    background-color: #0F0F0F;
+    border: none;
+    border-bottom: 1px solid #E1061C;
+    color: white;
+}
+
+.inputBar input:focus,
+.genreFilter select:focus { 
+    outline: none;
+    border-color: #E1061C;
+    box-shadow: 0 0 10px #E1061C;
+}
+
+#search-bar{
+    padding: 10px 5px;
+    width: 300px;
+}
+
+/* main  */
+main{
+    background-color: #111111;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+}
+
+
+/* genre section  */
+.type-title{
+    font-size: 35px;
+    color: #E1061C;
+}
+
+.movies,
+.tv-shows{
+    width: 90%;
+    margin: auto;
+    margin-top: 20px;
+}
+
+
+/* cards  */
+
+.card-container{
+    display: flex;
+    margin: auto;
+    overflow-x: auto;
+}
+
+.movie-card{
+    flex-basis: calc( 100% / 6 - 20px );
+    min-width: calc( 100% / 6 - 20px );
+    margin-right: 20px;
+    color: white;
+    position: relative;
+    margin-top: 20px;
+}
+
+
+.flag img{
+    width: 30px;
+    vertical-align: middle;
+    display: inline-block;
+    padding-left: 5px;
+}
+
+.stars i{
+    font-size: 17px;
+    color: white;
+    padding-right: 5px;
+}
+
+.card-overlay{
+    background-color: black;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+
+.movie-card:hover .card-overlay {
+    opacity: 1;
+    transition: all 1s;
+}
+
+
+.card-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    font-size: 14px;
+    overflow-y: auto;
+}
+
+.card-title{
+    margin-top: 15px;
+}
+
+.card-info h5{
+    display: inline-block;
+}
+
+.card-info div,
+.card-info ul
+{
+    padding: 20px;
+}
+
+.cast{
+    list-style-type: none;
+}
+
+.card-title h3 {
+    color: #E1061C;
+    font-size: 18px;
+}
+
