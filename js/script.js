@@ -3,19 +3,15 @@ var app = new Vue(
         el: '#root',
 
         data: {
+            // data ricerca 
             inputSearch: '',
             movieCards: [],
             tvShowCards: [],
-            // discoverMovies: [],
-            // discoverTvShows: []
 
-            // contengono le value delle select per filtrare la ricerca, inizializzato a all 
-            currentGenreMovie: 'all',
-            currentGenreTv: 'all',
+            // contiene le value delle select per filtrare la ricerca, inizializzato a all 
             currentGenre: 'all',
+
             // array dei generi presi dall'api 
-            movieGenres: [],
-            tvGenres: [],
             genresArray: []
         },
 
@@ -102,6 +98,8 @@ var app = new Vue(
                  return cardArray
             },
 
+            // passo l'arrai del risultato ricerca e l'id del genere da filtrare
+            //restituisce un array filtrato per genere
             getFilteredList(cardArray, genre){
                 let filteredArray = [];
                 if(genre != 'all'){
@@ -122,12 +120,16 @@ var app = new Vue(
 		},
  
         mounted() {
+            // costruisco un array di generi con id e nome presi dall'api 
+
+            //prendo i generi dei movie
             axios
                 .get('https://api.themoviedb.org/3/genre/movie/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
                 .then( (response) => {
                     const result = response.data;
                     this.genresArray = result.genres;
                 });
+            // appendo solo i generi esclusivi dei tv-show    
             axios
             .get('https://api.themoviedb.org/3/genre/tv/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
             .then( (response) => {
@@ -141,30 +143,6 @@ var app = new Vue(
                 console.log(this.genresArray)
             });            
 
-            // preacarico la pagina con una chiamata api discover
-            // axios
-            // .get('https://api.themoviedb.org/3/discover/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
-            //     params: {
-        
-            //     }
-            // })
-            // .then( (response) => {
-            //     const result = response.data;
-                
-            //     this.discoverTvShows = result.results;
-            // });
-            
-            // axios
-            //     .get('https://api.themoviedb.org/3/discover/movie?api_key=7848f97dd1bd380d77cb8f9495749dba', {
-            //         params: {
-    
-            //         }
-            //     })
-            //     .then( (response) => {
-            //         const result = response.data;
-                    
-            //         this.discoverMovies = result.results;
-            //     });
         },
 
     });
