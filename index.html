@@ -69,9 +69,10 @@
                                 </div>
 
                                 <ul class="Cast">
-                                    <li>Cast:</li>
-                                    <li v-for="name in getCast(card, card.id)">
-                                        {{ name }}
+                                    <li>Cast: {{ card.cast}}</li>
+                                    
+                                    <li v-for="castName in card.cast">
+                                        {{ castName }}
                                     </li>
                                     
                                 </ul>
@@ -110,9 +111,7 @@
 
                                 <ul class="Cast">
                                     <li>Cast:</li>
-                                    <li v-for="name in getCast(card, card.id)">
-                                        {{ name }}
-                                    </li>
+                                    
                                     
             
                                 </ul>

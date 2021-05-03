@@ -25,9 +25,19 @@ var app = new Vue(
                 })
                 .then( (response) => {
                     const result = response.data;
-                    this.movieCards = result.results;
+                    // this.movieCards = result.results;
 
-                    
+                    let movieArray = result.results;
+
+                    this.getCast(movieArray, 'movie')
+                    // movieArray.forEach(element => {
+                    //     const namesArray = this.getCast('movie', element.id)
+
+                    //     //console.log(this.getCast('movie', element.id))
+                    //     element.name = namesArray
+                    //     console.log(namesArray)
+                    // });
+
                 });
 
                 axios
@@ -51,10 +61,10 @@ var app = new Vue(
                 return voteOnFive;
             },
 
-            getCast(currentObj, id){
-                if( this.movieCards.includes(currentObj) ){
+            getCast(movieArray, type){
+                movieArray.forEach(element => {
                     axios
-                    .get(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=e05661b069389f9a2788162b272f96a8`, {
+                    .get(`https://api.themoviedb.org/3/${type}/${element.id}/credits?api_key=e05661b069389f9a2788162b272f96a8`, {
                         params: {
                         
                         }
@@ -64,32 +74,17 @@ var app = new Vue(
                         let cast = response.data.cast;
                         
                         cast = cast.slice(0, 5);
-                        cast.forEach(element => {
-                            castNames.push(element.name)
+                        cast.forEach(obj => {
+                            castNames.push(obj.name)
                         });
-                        console.log(castNames);
-                        return castNames;
-                    });
-                } else{
-                    axios
-                    .get(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=e05661b069389f9a2788162b272f96a8`, {
-                        params: {
-                        
-                        }
-                    })
-                    .then( (response) => {
-                        const castNames = [];
-                        let cast = response.data.cast;
-                        
-                        cast = cast.slice(0, 5);
-                        cast.forEach(element => {
-                            castNames.push(element.name)
-                        });
-                        console.log(castNames);
-                        return castNames;
+
+                        element.cast = castNames;                   
                     });
 
-                }
+                });
+
+                this.movieCards = movieArray;
+                console.log(this.movieCards)
             }
 
 		},
