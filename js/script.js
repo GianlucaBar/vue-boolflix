@@ -37,8 +37,8 @@ var app = new Vue(
 
                     let movieArray = result.results;
 
-                    movieArray = this.getCast(movieArray, 'movie');
-                    this.movieCards = movieArray; 
+                    this.getCast(movieArray, 'movie');
+ 
                     
                 });
 
@@ -54,8 +54,8 @@ var app = new Vue(
 
                     let tvArray = result.results;
 
-                    tvArray = this.getCast(tvArray, 'tv')
-                    this.tvShowCards = tvArray;
+                    this.getCast(tvArray, 'tv')
+    
                 });
             },
 
@@ -87,6 +87,11 @@ var app = new Vue(
                         });
 
                         element.cast = castNames;
+                        if(type == 'movie'){
+                            this.movieCards.push(element)
+                        } else {
+                            this.tvShowCards.push(element)
+                        }
                         
                     });
 
@@ -107,7 +112,6 @@ var app = new Vue(
                    filteredArray = cardArray;
                 }
 
-                console.log(filteredArray)
                 return filteredArray
                 
             },
