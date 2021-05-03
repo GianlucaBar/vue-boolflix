@@ -27,20 +27,13 @@
 
                 <div class="genreFilter">
                     <div>
-                        <label for="movieFilter">Movies</label>
-                        <select id="movieFilter" v-model="currentGenreMovie">
+                        <label for="genreFilter">Filtra per genere</label>
+                        <select id="genreFilter" v-model="currentGenre">
                             <option value="all">All</option>
-                            <option v-for="genre in movieGenres" :value="genre.id">{{genre.name}}</option>
+                            <option v-for="genre in genresArray" :value="genre.id">{{genre.name}}</option>
                         </select>
                     </div>
-    
-                    <div>
-                        <label for="tvFilter">TV-Shows</label>
-                        <select id="tvFilter" v-model="currentGenreTv">
-                            <option value="all">All</option>
-                            <option v-for="genre in tvGenres" :value="genre.id">{{genre.name}}</option>
-                        </select>
-                    </div>
+
                 </div>
 
 
@@ -48,7 +41,7 @@
                 <div class="inputBar">
                     <i class="fas fa-search"></i>
                     <input v-model="inputSearch" type="text" id="search-bar"
-                    @keyup.enter="getSearchResult">
+                    @keyup.enter="getSearchResult" @keyup="getSearchResult">
                 </div>
             </div>   
         </header>
@@ -60,7 +53,7 @@
                 <!-- card per il risultato della ricerca sui movies  -->
                 <div class="card-container">
 
-                    <div class="movie-card" v-for="card in getFilteredList(movieCards, currentGenreMovie)">
+                    <div class="movie-card" v-for="card in getFilteredList(movieCards, currentGenre)">
 
                         <div class="card-cover">
                             <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->
@@ -102,12 +95,13 @@
                     </div>
                 </div>
             </section>
+
             <section class="tv-shows" v-if="inputSearch != ''">
                 <h2 class="type-title">TV-Shows</h2>
 
                 <!-- card per il risultato della ricerca sui tv-shows  -->
                 <div class="card-container">
-                    <div class="movie-card" v-for="card in getFilteredList(tvShowCards, currentGenreTv)">
+                    <div class="movie-card" v-for="card in getFilteredList(tvShowCards, currentGenre)">
 
                         <div class="card-cover">
                             <!-- se l'immagine non e' presente in api prendo un immagine placeholder in locale  -->

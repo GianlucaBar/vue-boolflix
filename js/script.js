@@ -12,10 +12,11 @@ var app = new Vue(
             // contengono le value delle select per filtrare la ricerca, inizializzato a all 
             currentGenreMovie: 'all',
             currentGenreTv: 'all',
-
+            currentGenre: 'all',
             // array dei generi presi dall'api 
             movieGenres: [],
             tvGenres: [],
+            genresArray: []
         },
 
         methods: {
@@ -36,9 +37,9 @@ var app = new Vue(
 
                     let movieArray = result.results;
 
-                    this.getCast(movieArray, 'movie')
+                    movieArray = this.getCast(movieArray, 'movie');
+                    this.movieCards = movieArray; 
                     
-
                 });
 
                 axios
@@ -53,7 +54,8 @@ var app = new Vue(
 
                     let tvArray = result.results;
 
-                    this.getCast(tvArray, 'tv')
+                    tvArray = this.getCast(tvArray, 'tv')
+                    this.tvShowCards = tvArray;
                 });
             },
 
@@ -85,15 +87,11 @@ var app = new Vue(
                         });
 
                         element.cast = castNames;
-                        if(type == 'movie'){
-                            this.movieCards.push(element)
-                        } else{
-                            this.tvShowCards.push(element)
-                        }               
+                        
                     });
 
                 });
-
+                 return cardArray
             },
 
             getFilteredList(cardArray, genre){
@@ -121,13 +119,19 @@ var app = new Vue(
                 .get('https://api.themoviedb.org/3/genre/movie/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
                 .then( (response) => {
                     const result = response.data;
-                    this.movieGenres = result.genres;
+                    this.genresArray = result.genres;
                 });
             axios
             .get('https://api.themoviedb.org/3/genre/tv/list?api_key=7848f97dd1bd380d77cb8f9495749dba')
             .then( (response) => {
                 const result = response.data;
-                this.tvGenres = result.genres;
+                result.genres.forEach(element => {
+                    if(!this.genresArray.some(genre => genre.name === element.name)){
+                        console.log(this.genresArray.some(genre => genre.name === element.name))
+                        this.genresArray.push(element)
+                    }
+                });
+                console.log(this.genresArray)
             });            
 
             // preacarico la pagina con una chiamata api discover
