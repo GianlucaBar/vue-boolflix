@@ -8,7 +8,12 @@ var app = new Vue(
             tvShowCards: [],
             // discoverMovies: [],
             // discoverTvShows: []
-            thisCast: []
+            thisCast: [],
+
+            // genreArrays: {
+            //     movie_genre: ''
+            //     tv_genre: ''
+            // }
         },
 
         methods: {
@@ -25,33 +30,25 @@ var app = new Vue(
                 })
                 .then( (response) => {
                     const result = response.data;
-                    // this.movieCards = result.results;
 
-                    let movieArray = result.results;
-
-                    this.getCast(movieArray, 'movie')
-                    // movieArray.forEach(element => {
-                    //     const namesArray = this.getCast('movie', element.id)
-
-                    //     //console.log(this.getCast('movie', element.id))
-                    //     element.name = namesArray
-                    //     console.log(namesArray)
-                    // });
+                    this.movieCards = result.results;
+                    this.getCast(this.movieCards, 'movie');
+                    console.log(this.movieCards)  
 
                 });
 
-                axios
-                .get('https://api.themoviedb.org/3/search/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
-                    params: {
-                        query: this.inputSearch,
-                        page: 1
-                    }
-                })
-                .then( (response) => {
-                    const result = response.data;
+                // axios
+                // .get('https://api.themoviedb.org/3/search/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
+                //     params: {
+                //         query: this.inputSearch,
+                //         page: 1
+                //     }
+                // })
+                // .then( (response) => {
+                //     const result = response.data;
                     
-                    this.tvShowCards = result.results;
-                });
+                //     this.tvShowCards = result.results;
+                // });
             },
 
             // gli viene passato il voto in decimi che viene dall'api
@@ -78,19 +75,21 @@ var app = new Vue(
                             castNames.push(obj.name)
                         });
 
-                        element.cast = castNames;                   
+                        element.cast = castNames;                 
                     });
 
                 });
 
-                this.movieCards = movieArray;
-                console.log(this.movieCards)
-            }
+            },
 
 		},
 
         // preacarico la pagina con una chiamata api discover 
         mounted() {
+            // getGenresArray(){
+            //     axios
+            //     .get()
+            // }
             // axios
             // .get('https://api.themoviedb.org/3/discover/tv?api_key=7848f97dd1bd380d77cb8f9495749dba', {
             //     params: {

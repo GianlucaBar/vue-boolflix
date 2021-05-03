@@ -35,7 +35,7 @@
 
         <!-- main  -->
         <main>
-            
+            {{movieCards}}
             <section class="search-section">
                 <!-- card per il risultato della ricerca sui movies  -->
                 <div class="card-container">
@@ -69,11 +69,11 @@
                                 </div>
 
                                 <ul class="Cast">
-                                    <li>Cast: {{ card.cast}}</li>
+                                    <li>Cast: {{ card.cast }}</li>
                                     
-                                    <li v-for="castName in card.cast">
+                                    <!-- <li v-for="castName in card.cast">
                                         {{ castName }}
-                                    </li>
+                                    </li> -->
                                     
                                 </ul>
                             </div>
@@ -112,8 +112,6 @@
                                 <ul class="Cast">
                                     <li>Cast:</li>
                                     
-                                    
-            
                                 </ul>
                             </div>
                         </div>
